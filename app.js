@@ -2,16 +2,29 @@ const express = require('express')
 const connectDB = require('./db/connect')
 const cors = require('cors')
 require('dotenv').config()
+const transactionRoutes = require('./routes/transactionRoutes') 
+const { StatusCodes } = require('http-status-codes')
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 // application middlewares
-app.use(cors)
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
 
 app.get('/', (req, res) => {
-    res.send("Welcome to your Expense Tracker")
+    res.status(StatusCodes.OK).send("Welcome to your Expense Tracker")
 })
+
+app.use('/api/transaction', transactionRoutes)
+
+// incase of invalid routes from the client
+app.get("/*", (req, res) => {
+    res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid URL" })
+})
+
 
 const start = async () => {
     try {
