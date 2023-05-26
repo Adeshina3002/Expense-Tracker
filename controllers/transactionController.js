@@ -1,6 +1,5 @@
 const { StatusCodes } = require('http-status-codes')
 const Transaction = require('../models/transaction')
-const { STATES } = require('mongoose')
 
 // Fetch all transaction records
 const getAllRecords = async (req, res, next) => {
@@ -108,5 +107,6 @@ module.exports = {
     createTransaction,
     getAllRecords,
     getTransaction,
+    updateRecord,
     deleteRecord
 }
